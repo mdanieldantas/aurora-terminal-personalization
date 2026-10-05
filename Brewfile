@@ -1,3 +1,11 @@
-# Dependências serão definidas após o diagnóstico do ambiente.
-# Nenhuma fórmula está habilitada nesta versão.
-# Yazi será um componente opcional da personalização.
+# Lista declarativa; o personalizador não deve instalar sem verificar e confirmar.
+brew "zsh"
+brew "starship"
+brew "zoxide"
+brew "fzf"
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "eza"
+brew "git"
+brew "yazi"

@@ -1,0 +1,15 @@
+Aurora já instalado
+        ↓
+Aurora DX ativado
+        ↓
+Aurora CLI ativado
+        ↓
+nosso projeto personaliza o terminal
+
+Gear Lever - organizar app image
+
+vlc 
+
+plasma drawer
+
+

@@ -1,8 +1,7 @@
-# Dados pessoais e artefatos locais
 /logs/*
 !/logs/.gitkeep
 /backups/*
 !/backups/.gitkeep
-/.cache/
 *.tmp
 *.bak
+.cache/

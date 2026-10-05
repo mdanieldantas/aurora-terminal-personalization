@@ -1,15 +1,11 @@
-# Preparação do projeto
+# Como instalar
 
-1. Crie ou baixe a pasta aurora-terminal-personalization.
-2. Coloque o criador em tools/create-project-structure.sh.
-3. Na raiz, execute: bash tools/create-project-structure.sh --dry-run
-4. Confira a raiz exibida e as ações planejadas.
-5. Execute: bash tools/create-project-structure.sh
+O repositório deve ser preparado no Aurora Linux, não no WSL usado apenas para edição.
 
-Não use sudo. Não é necessário tornar o script executável ao usar bash.
-O nome da pasta raiz pode mudar; sua localização é calculada a partir de tools/.
-Git não é obrigatório, inclusive quando o projeto é baixado como ZIP.
+    git clone URL_DO_REPOSITORIO
+    cd aurora-terminal-personalization
+    bash tools/create-project-structure.sh --dry-run
+    bash tools/create-project-structure.sh
+    bash personalize-aurora-terminal.sh --dry-run
 
-O criador não reinstala arquivos existentes, nem atualiza seu conteúdo.
-Se README.md ou .gitignore já existirem, revise-os manualmente.
-A personalização real ainda não está disponível.
+A simulação deve ser revisada antes de qualquer futura instalação.

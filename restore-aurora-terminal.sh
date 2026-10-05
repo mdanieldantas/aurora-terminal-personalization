@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-printf '%s\n' \
-    'Restaurador ainda não implementado.' \
-    'Nenhum arquivo foi restaurado ou alterado.'
+printf '%s
+' 'Restaurador ainda não implementado.' 'Nenhum arquivo foi alterado.'
 exit 0
