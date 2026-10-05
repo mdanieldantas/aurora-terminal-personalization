@@ -44,7 +44,7 @@ trap 'printf "[ERRO] linha %s: %s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
 
 ask_yes_no(){
   local q="$1" default="${2:-N}" answer=''
-  (( ASSUME_YES )) && { [[ "$default" == S ]]; return; }
+  if (( ASSUME_YES )); then [[ "$default" == S ]]; return; fi
   if [[ "$default" == S ]]; then read -r -p "$q [S/n] " answer || true; answer="${answer:-S}";
   else read -r -p "$q [s/N] " answer || true; answer="${answer:-N}"; fi
   [[ "$answer" =~ ^[SsYy]$ ]]
@@ -81,6 +81,7 @@ required=(zsh starship zoxide fzf ripgrep fd bat eza git yazi)
 missing=(); failed=()
 formula_command(){ [[ "$1" == ripgrep ]] && printf rg || printf '%s' "$1"; }
 find_missing(){ local f c; for f in "${required[@]}"; do c="$(formula_command "$f")"; has_cmd "$c" || missing+=("$f"); done; }
+run_with_timeout(){ if has_cmd timeout; then timeout "$@"; else shift; "$@"; fi; }
 install_formulae(){
   ((${#missing[@]}==0)) && { info 'Nenhuma fórmula ausente.'; return; }
   info "Fórmulas ausentes: ${missing[*]}"
@@ -89,7 +90,7 @@ install_formulae(){
   ask_yes_no 'Instalar fórmulas ausentes pelo Homebrew?' S || { warn 'Instalação ignorada.'; failed+=("${missing[@]}"); return; }
   local f
   for f in "${missing[@]}"; do
-    if has_cmd timeout && retry 2 5 timeout 600 brew install "$f" || (! has_cmd timeout && retry 2 5 brew install "$f"); then info "Disponível após Brew: $f"; else warn "Falha no Brew: $f"; failed+=("$f"); fi
+    if retry 2 5 run_with_timeout 600 brew install "$f"; then info "Disponível após Brew: $f"; else warn "Falha no Brew: $f"; failed+=("$f"); fi
   done
 }
 
@@ -104,7 +105,7 @@ clone_plugins(){
     [[ ! -e "$target" ]] || { warn "Destino incompleto/ocupado: $target"; continue; }
     if (( DRY_RUN )); then printf '[SIMULAÇÃO] clone %s -> %s\n' "$repo" "$target"; continue; fi
     mkdir -p "$dir"
-    if has_cmd timeout && retry 3 5 timeout 300 git clone --quiet --depth=1 --single-branch "https://github.com/$repo.git" "$target" || (! has_cmd timeout && retry 3 5 git clone --quiet --depth=1 --single-branch "https://github.com/$repo.git" "$target"); then info "Plugin instalado: $name"; else rm -rf -- "$target"; warn "Falha ao baixar: $repo"; fi
+    if retry 3 5 run_with_timeout 300 git clone --quiet --depth=1 --single-branch "https://github.com/$repo.git" "$target"; then info "Plugin instalado: $name"; else rm -rf -- "$target"; warn "Falha ao baixar: $repo"; fi
   done
 }
 
@@ -174,7 +175,8 @@ truncate_to_repo = true
 [git_branch]
 symbol = ' '
 EOF
-  has_cmd zsh && zsh -n "$TMP_ROOT/.zshenv" "$TMP_ROOT/zsh/.zshrc" "$TMP_ROOT/zsh/aliases.zsh" "$TMP_ROOT/zsh/yazi.zsh" "$TMP_ROOT/zsh/prompt.zsh" "$TMP_ROOT/zsh/plugins.zsh" || warn 'Zsh ausente ou configuração não validada.'
+  if ! has_cmd zsh; then die 'Zsh é necessário para validar e configurar os arquivos.'; fi
+  zsh -n "$TMP_ROOT/.zshenv" "$TMP_ROOT/zsh/.zshrc" "$TMP_ROOT/zsh/aliases.zsh" "$TMP_ROOT/zsh/yazi.zsh" "$TMP_ROOT/zsh/prompt.zsh" "$TMP_ROOT/zsh/plugins.zsh"
   if (( DRY_RUN )); then info '[SIMULAÇÃO] Configuração validada; não será aplicada.'; return; fi
   mkdir -p "$BACKUP_DIR"; : > "$BACKUP_DIR/manifest.txt"
   backup_file "$HOME/.zshenv" '.zshenv'; backup_file "$zd/.zshrc" '.config/zsh/.zshrc'; backup_file "$zd/aliases.zsh" '.config/zsh/aliases.zsh'; backup_file "$zd/plugins.zsh" '.config/zsh/plugins.zsh'; backup_file "$zd/yazi.zsh" '.config/zsh/yazi.zsh'; backup_file "$zd/prompt.zsh" '.config/zsh/prompt.zsh'; backup_file "$sd/starship.toml" '.config/starship/starship.toml'
