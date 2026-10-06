@@ -10,15 +10,16 @@ nosso projeto personaliza o terminal
         ↓
 Google crome
         ↓
-node 
+node brew install node
         ↓
 https://www.onlyoffice.com/pt
         ↓
 ainda falta instalar: 
         ↓
-Linux toys
+Linux toys https://linux.toys/index.pt-BR.html https://github.com/psygreg/linuxtoys
         ↓
 Gear Lever - organizar app image
+https://flathub.org/en/apps/it.mijorus.gearlever
         ↓
 plasma drawer
         ↓
