@@ -7,21 +7,21 @@ Aurora DX ativado
 Aurora CLI ativado
         ↓
 nosso projeto personaliza o terminal
-
-
-
+        ↓
 Google crome
-
+        ↓
+node 
+        ↓
 https://www.onlyoffice.com/pt
-
+        ↓
 ainda falta instalar: 
-
+        ↓
 Linux toys
-
+        ↓
 Gear Lever - organizar app image
-
+        ↓
 plasma drawer
-
+        ↓
 Algum programa de gdrive https://www.overgrive.com/home ou https://rclone.org/ com https://flathub.org/en/apps/io.github.zarestia_dev.rclone-manager
 
 
@@ -30,138 +30,206 @@ Algum programa de gdrive https://www.overgrive.com/home ou https://rclone.org/ c
 
 Esta é a relação compacta dos itens únicos da planilha:
 
-Cursor.
+================================================================
 
-vlc
 
-Visual Studio Code.
 
-Git.
+Cursor. https://formulae.brew.sh/cask/cursor#default
 
-Node.js.
 
-Docker Desktop.
 
-Insomnia.
+vlc https://flathub.org/en/apps/org.videolan.VLC
 
-Postman.
+&#x20;
 
-PostgreSQL.
+Visual Studio Code. https://flathub.org/en/apps/com.visualstudio.code
 
-MariaDB.
+
+
+Git.  https://formulae.brew.sh/formula/git#default
+
+
+
+Node.js. https://formulae.brew.sh/formula/node#default
+
+
+
+
+
+Insomnia. https://flathub.org/en/apps/rest.insomnia.Insomnia
+
+
+
+Postman. https://flathub.org/en/apps/com.getpostman.Postman
+
+
+
+PostgreSQL. https://flathub.org/en/apps/org.pgadmin.pgadmin4
+
+
+
+MariaDB. https://flathub.org/en/apps/it.fabiodistasio.AntaresSQL
+
+
 
 Prisma ORM.
 
-Notepad++.
+
+
+
+
+
 
 REAPER.
 
-ReaPlugs.
 
-Studio One 7.
+
+\- ReaPlugs. lsp-plugins-1.2.35-Linux-x86\_64.7z 
+
+https://github.com/lsp-plugins/lsp-plugins/releases/tag/1.2.35 
+
+Instalar no diretório do usuário, evitando modificar a imagem base do Aurora.Configurar o caminho no REAPER e testar.
+
+
 
 Stirling-PDF.
 
-LM Studio.
+wget https://files.stirlingpdf.com/linux-installer.AppImage
 
-Buzz.
+chmod +x linux-installer.AppImage
 
-Vibe.
+./linux-installer.AppImage
 
-HandBrake.
 
-fre:ac.
 
-OBS Studio.
 
-DroidCam.
 
-Camo.
+LM Studio. https://flathub.org/en/apps/ai.lmstudio.lm-studio Nativo: AppImage
 
-Logitech Capture.
 
-VoiceMeeter.
 
-ASIO4ALL.
+Buzz. Nativo: Flatpak/AppImage https://flathub.org/pt-BR/apps/io.github.chidiwilliams.Buzz
 
-UPDF.
 
-Bitwarden.
 
-Obsidian.
+Vibe. Nativo: Flatpak/AppImage/RPM https://github.com/thewh1teagle/vibe/releases
 
-Notion.
 
-Espanso.
 
-scrcpy.
+HandBrake. Nativo: Flatpak
 
-Figma.
 
-Canva.
 
-JDownloader.
+fre:ac. Nativo: Flatpak
 
-Drivers da AMD RX 6600.
 
-Drivers da Nvidia 920M.
 
-Suporte da ASRock.
+OBS Studio. Nativo: Flatpak
 
-HWMonitor.
 
-CPU-Z.
 
-GPU-Z.
+DroidCam https://droidcam.app/linux/
 
-CrystalDiskInfo.
 
-CrystalDiskMark.
 
-Bloatynosy.
 
-Ninite.
 
-Windows Terminal.
+openlogi: https://openlogi.org/
 
-Razer Synapse.
 
-Spacedesk.
 
-Steam.
 
-Epic Games Store.
 
-League of Legends: Wild Rift.
+pipewire, jackaudio, alsa : https://pipewire.org/   https://www.alsa-project.org/wiki/Main\_Page    https://jackaudio.org/downloads/
 
-Paperless-ngx.
 
-Portainer.
 
-Zotero.
 
-Anki.
 
-Fichas e mapas de D&D 5e.
+Bitwarden :https://flathub.org/pt-BR/apps/com.bitwarden.desktop
 
-Fichas e mapas de Avatar Legends.
 
-Owlbear Rodeo.
 
-Discord.
+Obsidian. https://flathub.org/pt-BR/apps/md.obsidian.Obsidian
 
-WhatsApp.
 
-Ferdi.
 
-Franz.
 
-OpenVPN.
 
-WireGuard.
+scrcpy. https://flathub.org/pt-BR/apps/io.github.IshuSinghSE.aurynk
 
-GIMP.
 
-Cameractrls.
 
-LSP Plugins.
+
+
+JDownloader https://flathub.org/pt-BR/apps/org.jdownloader.JDownloader
+
+
+
+
+
+corex: https://flathub.org/pt-BR/apps/io.github.edewin.corex
+
+
+
+CPU-x. https://flathub.org/pt-BR/apps/io.github.thetumultuousunicornofdarkness.cpu-x
+
+
+
+GPU-Viewer. https://flathub.org/pt-BR/apps/io.github.arunsivaramanneo.GPUViewer
+
+
+
+QDiskInfo-x86\_64.AppImage .https://github.com/edisionnano/QDiskInfo/releases
+
+
+
+KDiskMark https://flathub.org/en/apps/io.github.jonmagon.kdiskmark
+
+
+
+
+
+Razer Synapse. https://openrazer.github.io/
+
+
+
+
+
+Steam. https://flathub.org/en/apps/com.valvesoftware.Steam
+
+
+
+Epic Games Store. https://flathub.org/en/apps/com.heroicgameslauncher.hgl
+
+
+
+
+
+Paperless-ngx. instalar por docker
+
+
+
+Zotero. https://flathub.org/en/apps/org.zotero.Zotero
+
+
+
+
+
+Discord. https://flathub.org/en/apps/com.discordapp.Discord
+
+
+
+WhatsApp. https://flathub.org/en/apps/com.rtosta.zapzap
+
+
+
+Kdenlive https://flathub.org/en/apps/org.kde.kdenlive
+
+
+
+GIMP. https://flathub.org/en/apps/org.gimp.GIMP
+
+
+
+Cameractrls. https://flathub.org/en/apps/hu.irl.cameractrls
