@@ -1,0 +1,47 @@
+# Catálogo Flatpak do Aurora Setup
+# Formato: categoria|nome|id|descrição|prioridade|estado
+# O instalador usa este catálogo para montar os menus automaticamente.
+# Linhas iniciadas por # são ignoradas.
+
+browsers|Google Chrome|com.google.Chrome|Navegador web|alta|confirmado
+browsers|Brave Browser|com.brave.Browser|Navegador web|alta|confirmado
+
+development|Visual Studio Code|com.visualstudio.code|Editor de código|alta|confirmado
+development|Insomnia|rest.insomnia.Insomnia|Cliente de APIs|média|confirmado
+development|Postman|com.getpostman.Postman|Cliente de APIs|média|confirmado
+development|pgAdmin 4|org.pgadmin.pgadmin4|Administração de PostgreSQL|média|confirmado
+development|Antares SQL|it.fabiodistasio.AntaresSQL|Cliente de bancos de dados|média|confirmado
+
+media|VLC|org.videolan.VLC|Reprodutor multimídia|alta|confirmado
+media|OBS Studio|com.obsproject.Studio|Gravação e transmissão|alta|confirmado
+media|HandBrake|fr.handbrake.ghb|Conversor de vídeo|média|confirmado
+media|fre:ac|org.freac.freac|Conversor de áudio e ripador de CD|média|confirmado
+media|Kdenlive|org.kde.kdenlive|Editor de vídeo|média|confirmado
+
+productivity|Bitwarden|com.bitwarden.desktop|Gerenciador de senhas|alta|confirmado
+productivity|Obsidian|md.obsidian.Obsidian|Notas e documentação|alta|confirmado
+productivity|Zotero|org.zotero.Zotero|Gerenciador bibliográfico|média|confirmado
+productivity|JDownloader|org.jdownloader.JDownloader|Gerenciador de downloads|baixa|confirmado
+
+gaming|Steam|com.valvesoftware.Steam|Plataforma de jogos|média|confirmado
+gaming|Heroic Games Launcher|com.heroicgameslauncher.hgl|Launcher de jogos|média|confirmado
+
+graphics|GIMP|org.gimp.GIMP|Editor de imagens|média|confirmado
+graphics|Camera Controls|hu.irl.cameractrls|Controles de câmera|baixa|confirmado
+
+diagnostics|Corex|io.github.edewin.corex|Ferramenta de diagnóstico|baixa|revisar
+diagnostics|CPU-X|io.github.thetumultuousunicornofdarkness.cpu-x|Informações de CPU e hardware|baixa|confirmado
+diagnostics|GPU-Viewer|io.github.arunsivaramanneo.GPUViewer|Informações de GPU e APIs gráficas|baixa|confirmado
+diagnostics|KDiskMark|io.github.jonmagon.kdiskmark|Benchmark de armazenamento|baixa|confirmado
+diagnostics|Aurynk|io.github.IshuSinghSE.aurynk|Interface Android baseada em scrcpy|baixa|confirmado
+
+ai|LM Studio|ai.lmstudio.lm-studio|Execução local de modelos de IA|média|confirmado
+ai|Buzz|io.github.chidiwilliams.Buzz|Transcrição e tradução offline|média|confirmado
+# ai|Vibe|ID_A_CONFIRMAR|Transcrição local|média|revisar
+
+communication|Discord|com.discordapp.Discord|Comunicação por voz e texto|média|confirmado
+communication|ZapZap|com.rtosta.zapzap|Cliente WhatsApp|média|confirmado
+
+# Fora do instalador Flatpak por decisão do projeto:
+# REAPER, LSP/ReaPlugs, Paperless-ngx, servidores PostgreSQL/MariaDB,
+# OpenRazer, PipeWire, ALSA e JACK.
