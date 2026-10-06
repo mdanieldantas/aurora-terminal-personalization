@@ -1,3 +1,5 @@
+Já tenho instalado:
+
 Aurora já instalado
         ↓
 Aurora DX ativado
@@ -6,10 +8,160 @@ Aurora CLI ativado
         ↓
 nosso projeto personaliza o terminal
 
-Gear Lever - organizar app image
 
-vlc 
+
+Google crome
+
+https://www.onlyoffice.com/pt
+
+ainda falta instalar: 
+
+Linux toys
+
+Gear Lever - organizar app image
 
 plasma drawer
 
+Algum programa de gdrive https://www.overgrive.com/home ou https://rclone.org/ com https://flathub.org/en/apps/io.github.zarestia_dev.rclone-manager
 
+
+
+
+
+Esta é a relação compacta dos itens únicos da planilha:
+
+Cursor.
+
+vlc
+
+Visual Studio Code.
+
+Git.
+
+Node.js.
+
+Docker Desktop.
+
+Insomnia.
+
+Postman.
+
+PostgreSQL.
+
+MariaDB.
+
+Prisma ORM.
+
+Notepad++.
+
+REAPER.
+
+ReaPlugs.
+
+Studio One 7.
+
+Stirling-PDF.
+
+LM Studio.
+
+Buzz.
+
+Vibe.
+
+HandBrake.
+
+fre:ac.
+
+OBS Studio.
+
+DroidCam.
+
+Camo.
+
+Logitech Capture.
+
+VoiceMeeter.
+
+ASIO4ALL.
+
+UPDF.
+
+Bitwarden.
+
+Obsidian.
+
+Notion.
+
+Espanso.
+
+scrcpy.
+
+Figma.
+
+Canva.
+
+JDownloader.
+
+Drivers da AMD RX 6600.
+
+Drivers da Nvidia 920M.
+
+Suporte da ASRock.
+
+HWMonitor.
+
+CPU-Z.
+
+GPU-Z.
+
+CrystalDiskInfo.
+
+CrystalDiskMark.
+
+Bloatynosy.
+
+Ninite.
+
+Windows Terminal.
+
+Razer Synapse.
+
+Spacedesk.
+
+Steam.
+
+Epic Games Store.
+
+League of Legends: Wild Rift.
+
+Paperless-ngx.
+
+Portainer.
+
+Zotero.
+
+Anki.
+
+Fichas e mapas de D&D 5e.
+
+Fichas e mapas de Avatar Legends.
+
+Owlbear Rodeo.
+
+Discord.
+
+WhatsApp.
+
+Ferdi.
+
+Franz.
+
+OpenVPN.
+
+WireGuard.
+
+GIMP.
+
+Cameractrls.
+
+LSP Plugins.
