@@ -1,0 +1,74 @@
+﻿Nome,Categoria,Método de instalação,Identificador / pacote,Site oficial,Fonte de instalação,Prioridade,Status,Escopo,Dependências,Observações,Data de verificação
+Aurora Linux,Sistema,Imagem Aurora,ghcr.io/ublue-os/aurora,https://getaurora.dev/,Imagem Aurora,Essencial,Instalado,Sistema,,Base do projeto.,2026-10-06
+Aurora DX,Desenvolvimento,Imagem Aurora,aurora-dx,https://docs.getaurora.dev/dx/aurora-dx-intro/,Aurora,Essencial,Instalado,Sistema,,Ambiente de desenvolvimento.,2026-10-06
+Aurora CLI,Terminal,ujust / Homebrew,aurora-cli,https://docs.getaurora.dev/guides/aurora-cli/,Aurora,Essencial,Instalado,Usuário,,Terminal personalizado e ferramentas.,2026-10-06
+Homebrew,Gerenciador,Homebrew,/home/linuxbrew/.linuxbrew,https://brew.sh/,Homebrew,Essencial,Instalado,Usuário,,Prefixo confirmado no Aurora.,2026-10-06
+Git,Desenvolvimento,Sistema/Homebrew,git,https://git-scm.com/,Sistema,Essencial,Instalado,Sistema,,Git encontrado em /usr/bin/git; evitar duplicação.,2026-10-06
+Node.js / npm,Desenvolvimento,Homebrew,node,https://nodejs.org/,Homebrew,Essencial,Pendente,Usuário,,Instalar com brew install node.,2026-10-06
+Zsh,Terminal/Desenvolvimento,Homebrew,zsh,https://www.zsh.org/,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+Starship,Terminal/Desenvolvimento,Homebrew,starship,https://starship.rs/,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+bat,Terminal/Desenvolvimento,Homebrew,bat,https://github.com/sharkdp/bat,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+eza,Terminal/Desenvolvimento,Homebrew,eza,https://github.com/eza-community/eza,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+fd,Terminal/Desenvolvimento,Homebrew,fd,https://github.com/sharkdp/fd,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+ripgrep,Terminal/Desenvolvimento,Homebrew,ripgrep,https://github.com/BurntSushi/ripgrep,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+zoxide,Terminal/Desenvolvimento,Homebrew,zoxide,https://github.com/ajeetdsouza/zoxide,Homebrew,Essencial,Instalado,Usuário,,,2026-10-06
+fzf,Terminal/Desenvolvimento,Homebrew,fzf,https://github.com/junegunn/fzf,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+Atuin,Terminal/Desenvolvimento,Homebrew,atuin,https://atuin.sh/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+chezmoi,Terminal/Desenvolvimento,Homebrew,chezmoi,https://www.chezmoi.io/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+direnv,Terminal/Desenvolvimento,Homebrew,direnv,https://direnv.net/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+GitHub CLI,Terminal/Desenvolvimento,Homebrew,gh,https://cli.github.com/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+mise,Terminal/Desenvolvimento,Homebrew,mise,https://mise.jdx.dev/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+Yazi,Terminal/Desenvolvimento,Homebrew,yazi,https://yazi-rs.github.io/,Homebrew,Recomendável,Instalado,Usuário,,,2026-10-06
+tealdeer,Terminal/Desenvolvimento,Homebrew,tealdeer,https://github.com/tealdeer-rs/tealdeer,Homebrew,Opcional,Instalado,Usuário,,,2026-10-06
+trash-cli,Terminal/Desenvolvimento,Homebrew,trash-cli,https://github.com/andreafrancia/trash-cli,Homebrew,Opcional,Instalado,Usuário,,,2026-10-06
+Dysk,Terminal/Desenvolvimento,Homebrew,dysk,https://github.com/Canop/dysk,Homebrew,Opcional,Instalado,Usuário,,,2026-10-06
+yq,Terminal/Desenvolvimento,Homebrew,yq,https://github.com/mikefarah/yq,Homebrew,Opcional,Instalado,Usuário,,,2026-10-06
+ffmpeg,Terminal/Desenvolvimento,Homebrew,ffmpeg,https://ffmpeg.org/,Homebrew,Opcional,Pendente,Usuário,,,2026-10-06
+jq,Terminal/Desenvolvimento,Homebrew,jq,https://jqlang.github.io/jq/,Homebrew,Opcional,Pendente,Usuário,,,2026-10-06
+Cursor,Terminal/Desenvolvimento,Homebrew,cursor,https://www.cursor.com/,Homebrew,Opcional,Pendente,Usuário,,,2026-10-06
+Google Chrome,Navegador,Flatpak,,https://www.google.com/chrome/,Manual/RPM,Opcional,Pendente,Usuário,,Confirmar ID no Flathub antes da instalação.,2026-10-06
+Visual Studio Code,Desenvolvimento,Flatpak,com.visualstudio.code,https://code.visualstudio.com/,Flathub,Recomendável,Pendente,Usuário,,,2026-10-06
+VLC,Multimídia,Flatpak,org.videolan.VLC,https://www.videolan.org/vlc/,Flathub,Recomendável,Pendente,Usuário,,,2026-10-06
+Bitwarden,Segurança,Flatpak,com.bitwarden.desktop,https://bitwarden.com/,Flathub,Recomendável,Pendente,Usuário,,,2026-10-06
+Obsidian,Notas,Flatpak,md.obsidian.Obsidian,https://obsidian.md/,Flathub,Recomendável,Pendente,Usuário,,,2026-10-06
+Steam,Jogos,Flatpak,com.valvesoftware.Steam,https://store.steampowered.com/about/,Flathub,Recomendável,Pendente,Usuário,,,2026-10-06
+Heroic Games Launcher,Jogos,Flatpak,com.heroicgameslauncher.hgl,https://heroicgameslauncher.com/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Discord,Comunicação,Flatpak,com.discordapp.Discord,https://discord.com/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+ZapZap,Comunicação,Flatpak,com.rtosta.zapzap,https://flathub.org/en/apps/com.rtosta.zapzap,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Kdenlive,Vídeo,Flatpak,org.kde.kdenlive,https://kdenlive.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+GIMP,Imagem,Flatpak,org.gimp.GIMP,https://www.gimp.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+OBS Studio,Gravação/streaming,Flatpak,com.obsproject.Studio,https://obsproject.com/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+HandBrake,Vídeo,Flatpak,fr.handbrake.ghb,https://handbrake.fr/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+fre:ac,Áudio,Flatpak,org.freac.freac,https://www.freac.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+JDownloader,Downloads,Flatpak,org.jdownloader.JDownloader,https://jdownloader.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Zotero,Pesquisa,Flatpak,org.zotero.Zotero,https://www.zotero.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Postman,APIs,Flatpak,com.getpostman.Postman,https://www.postman.com/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Insomnia,APIs,Flatpak,rest.insomnia.Insomnia,https://insomnia.rest/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+pgAdmin,Banco de dados,Flatpak,org.pgadmin.pgadmin4,https://www.pgadmin.org/,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Antares SQL,Banco de dados,Flatpak,it.fabiodistasio.AntaresSQL,https://github.com/FabioDistasio/antares,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+LM Studio,IA local,Flatpak,ai.lmstudio.lm-studio,https://lmstudio.ai/,Flathub/AppImage,Opcional,Pendente,Usuário,,,2026-10-06
+Buzz,Transcrição,Flatpak,io.github.chidiwilliams.Buzz,https://github.com/chidiwilliams/buzz,Flathub/AppImage,Opcional,Pendente,Usuário,,,2026-10-06
+Vibe,Transcrição/IA,Flatpak,,https://github.com/thewh1teagle/vibe/releases,AppImage/Flatpak/RPM,Opcional,Pendente,Usuário,,Confirmar ID no Flathub antes da instalação.,2026-10-06
+CPU-X,Hardware,Flatpak,io.github.thetumultuousunicornofdarkness.cpu-x,https://github.com/X0rg/CPU-X,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+GPU-Viewer,Hardware,Flatpak,io.github.arunsivaramanneo.GPUViewer,https://github.com/arunsivaramanneo/GPUViewer,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+KDiskMark,Discos,Flatpak,io.github.jonmagon.kdiskmark,https://github.com/JonMagon/KDiskMark,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Cameractrls,Webcam,Flatpak,hu.irl.cameractrls,https://github.com/ItayGrudev/cameractrls,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Corex,Compatibilidade,Flatpak,io.github.edewin.corex,https://flathub.org/pt-BR/apps/io.github.edewin.corex,Flathub,Opcional,Pendente,Usuário,,,2026-10-06
+Gear Lever,AppImage manager,Flatpak,it.mijorus.gearlever,https://flathub.org/en/apps/it.mijorus.gearlever,Flathub,Essencial,Instalado,Usuário,,Destino: ~/Applications/AppImages.,2026-10-06
+Warp,Terminal,AppImage + Gear Lever,,https://www.warp.dev/download,Site oficial,Essencial,Pendente,Usuário,,Baixar manualmente para ~/Downloads.,2026-10-06
+QDiskInfo,Discos,AppImage + Gear Lever,,https://github.com/edisionnano/QDiskInfo/releases,GitHub Releases,Recomendável,Pendente,Usuário,,,2026-10-06
+Stirling-PDF,PDF,AppImage + Gear Lever,,https://stirlingtools.com/,Site oficial,Recomendável,Pendente,Usuário,,,2026-10-06
+REAPER,Áudio,Instalador oficial,,https://www.reaper.fm/,Site oficial,Opcional,Pendente,Usuário,,,2026-10-06
+ReaPlugs / LSP Plugins,Áudio,Manual,,https://github.com/lsp-plugins/lsp-plugins/releases,GitHub Releases,Opcional,Pendente,Usuário,,,2026-10-06
+DroidCam,Webcam,Manual,,https://droidcam.app/linux/,Site oficial,Opcional,Pendente,Usuário,,,2026-10-06
+OpenRazer,Periféricos,Manual/repositório,,https://openrazer.github.io/,Projeto oficial,Opcional,Pendente,Sistema,,Instalar somente se houver hardware Razer.,2026-10-06
+Paperless-ngx,Documentos,Container,,https://docs.paperless-ngx.com/,Podman/Docker,Opcional,Pendente,Container,,Não instalar automaticamente.,2026-10-06
+Prisma ORM,Desenvolvimento,npm/Homebrew,,https://www.prisma.io/,npm/Homebrew,Recomendável,Pendente,Usuário,,,2026-10-06
+Google Drive,Nuvem,Manual/Flatpak,,https://rclone.org/,rclone/Rclone Manager,Opcional,Decidir,Usuário,,Escolher rclone + Rclone Manager ou OverGrive.,2026-10-06
+LinuxToys,Utilitários,Manual/script,,https://linux.toys/index.pt-BR.html,Projeto oficial,Opcional,Instalado,Usuário,,,2026-10-06
+Docker,Containers,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,Não instalar automaticamente.,2026-10-06
+Podman,Containers,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,Detectar; não instalar automaticamente.,2026-10-06
+PostgreSQL server,Banco de dados,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,Preferir container quando necessário; não instalar automaticamente.,2026-10-06
+MariaDB server,Banco de dados,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,Preferir container quando necessário; não instalar automaticamente.,2026-10-06
+Driver NVIDIA proprietário,Sistema/GPU,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,Não instalar neste momento; nouveau está funcional.,2026-10-06
+Nerd Font,Terminal,Manual/decisão,,,Projeto,Controle,Não instalar automaticamente,Sistema/Usuário,,"Instalar no sistema que renderiza o terminal, não pelo instalador Aurora.",2026-10-06

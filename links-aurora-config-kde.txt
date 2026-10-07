@@ -1,28 +1,33 @@
-Já tenho instalado:
 
-Aurora já instalado
+Aurora pós intalação
         ↓
 Aurora DX ativado
         ↓
 Aurora CLI ativado
         ↓
-nosso projeto personaliza o terminal
-        ↓
-Google crome
+Preencher com os comando de terminal ujust um por um em ordem
         ↓
 node brew install node
-        ↓
-https://www.onlyoffice.com/pt
-        ↓
-ainda falta instalar: 
-        ↓
-Linux toys https://linux.toys/index.pt-BR.html https://github.com/psygreg/linuxtoys
         ↓
 Gear Lever - organizar app image
 https://flathub.org/en/apps/it.mijorus.gearlever
         ↓
 plasma drawer
         ↓
+nosso projeto personaliza o terminal : personalize-aurora-terminal.sh
+        ↓
+Google crome: Flatpak
+        ↓
+Rodar o aurora-setup-script-flatpak com o: install-flatpaks.sh (ver lista de programas)
+        ↓
+onlyoffice: https://www.onlyoffice.com/pt
+        ↓
+Linux toys https://linux.toys/index.pt-BR.html https://github.com/psygreg/linuxtoys
+        ↓
+
+
+
+ainda falta instalar:
 Algum programa de gdrive https://www.overgrive.com/home ou https://rclone.org/ com https://flathub.org/en/apps/io.github.zarestia_dev.rclone-manager
 
 
