@@ -1,7 +1,7 @@
 # Aurora Pronto — Guia rápido de pós-instalação
 
 Documento 1 de 3 · Projeto pessoal Aurora Linux / Aurora DX  
-Versão 1.0 · 7 de outubro de 2026 · Autor do projeto: Marcos Daniel Gomes Dantas
+Versão 1.0 · 7 de outubro de 2026 · Autor do projeto: Marcos Daniel Gomes Dantas.
 
 Roteiro manual para preparar o Aurora, instalar somente o necessário e aplicar nossas personalizações. Não é um instalador automático: execute uma etapa por vez, leia a saída e pare se houver erro.
 
