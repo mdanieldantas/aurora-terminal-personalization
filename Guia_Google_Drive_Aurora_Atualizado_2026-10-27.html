@@ -1,0 +1,174 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Google Drive no Aurora — Guia atualizado</title><style>body{font:16px/1.65 system-ui,sans-serif;color:#243247;background:#f3f6fa;margin:0}main{max-width:980px;margin:auto;padding:36px;background:white}h1,h2{color:#103d60;line-height:1.3}section{margin-top:42px;border-top:1px solid #ddd;padding-top:18px}a{color:#075faa;overflow-wrap:anywhere}pre{background:#101e30;color:#eef4ff;padding:18px;overflow:auto;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}code{font-family:monospace}nav{background:#edf4fa;padding:20px;border-radius:8px}p{overflow-wrap:anywhere}@media print{body,main{background:white}main{padding:0}pre{background:#f3f3f3;color:#111}h2{break-after:avoid}a{color:inherit}}</style></head><body><main><h1>Google Drive no Aurora com rclone</h1><p>Guia consolidado e corrigido • 27/10/2026<br>Marcos Daniel Gomes Dantas</p><p>Estado final: aplicativo OAuth em produção, autorização renovada e montagem confirmada. Sem tokens ou chaves secretas.</p><nav id="mini-sumario"><h2>Mini-sumário</h2><ol><li><a href="#estado">Estado atual e limites da validação</a></li><li><a href="#mapa">Ambiente, componentes e caminhos</a></li><li><a href="#cotidiano">Uso diário e verificação rápida</a></li><li><a href="#incidente">Incidente: invalid_grant e correção do diagnóstico</a></li><li><a href="#cloud">Google Cloud: projeto e credenciais existentes</a></li><li><a href="#pages">GitHub Pages: site informativo e privacidade</a></li><li><a href="#branding">Branding: preenchimento que liberou a publicação</a></li><li><a href="#publicacao">Produção, privacidade, custos e limites</a></li><li><a href="#reconnect">Renovação da autorização: sequência validada</a></li><li><a href="#reconstrucao">Reconstrução em outra instalação: verificar antes</a></li><li><a href="#systemd">Unidade systemd preservada do guia validado</a></li><li><a href="#cache">Cache, uploads e cuidados com dados</a></li><li><a href="#diagnostico">Diagnóstico seguro sem reinstalar</a></li><li><a href="#operacao">Comandos de manutenção e reversão</a></li><li><a href="#seguranca">Segurança, backup de configuração e GUI</a></li><li><a href="#checklist">Checklist final e pendências reais</a></li><li><a href="#fontes">Base documental e histórico desta edição</a></li></ol></nav><section id="estado"><h2>1. Estado atual e limites da validação</h2><p>Atualizado em 27/10/2026, após confirmação às 09:14 (-03).<br>Responsável: Marcos Daniel Gomes Dantas.</p>
+<p>Resultado confirmado na conversa:<br>- Aplicativo OAuth <code>rclone gdrive Aurora Dan</code> em produção.<br>- Credenciais próprias já estavam configuradas antes desta manutenção; não foram criadas agora.<br>- Autorização renovada após a publicação.<br>- Listagem remota funcionando com o binário e a configuração usados pelo serviço.<br>- Serviço ativo e pasta montada.<br>- Serviço habilitado, conforme diagnóstico de 26/10.</p>
+<p>Saída final fornecida pelo usuário:</p>
+<pre><code>active
+/var/home/dan/GoogleDrive is a mountpoint</code></pre>
+<p>O guia anterior registrava um teste bem-sucedido após reiniciar. Nesta manutenção, não foi confirmado um novo reboot após a mudança OAuth. Esse teste permanece recomendado, não marcado como realizado.</p>
+<p>Este documento consolida o guia antigo e a manutenção de 26–27/10. Não modifica automaticamente os artefatos anteriores. A referência operacional passa a ser esta edição.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="mapa"><h2>2. Ambiente, componentes e caminhos</h2><ul><li>Sistema: Aurora Linux; base Fedora registrada no histórico, não novamente auditada nesta sessão.</li><li>Usuário: <code>dan</code>; home: <code>/var/home/dan</code>.</li><li>Binário efetivamente usado: <code>/usr/bin/rclone</code>.</li><li>Versão observada no diagnóstico de 26/10: <code>1.75.2</code>.</li><li>Helper FUSE observado: <code>/usr/bin/fusermount3</code>.</li><li>Remote: <code>gdrive:</code>.</li><li>Pasta: <code>~/GoogleDrive</code>.</li><li>Unidade: <code>rclone-gdrive.service</code>.</li><li>Configuração: <code>~/.config/rclone/rclone.conf</code>.</li><li>Cache: <code>~/.cache/rclone</code>.</li><li>Log: <code>~/.local/state/rclone/gdrive.log</code>.</li><li>Arquivo da unidade: <code>~/.config/systemd/user/rclone-gdrive.service</code>.</li></ul>
+<p>Há registro histórico de outra cópia via Homebrew. Sua versão atual não foi verificada. Atualizar essa cópia não atualiza necessariamente <code>/usr/bin/rclone</code>.</p>
+<p>O remote, a pasta e o nome do aplicativo OAuth são entidades diferentes. Mudar o nome de exibição no Google não exige renomear <code>gdrive:</code> ou o serviço.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="cotidiano"><h2>3. Uso diário e verificação rápida</h2><p>Abra <code>~/GoogleDrive</code> no Dolphin. O serviço do usuário foi habilitado para iniciar na sessão, sem precisar abrir uma GUI do rclone.</p>
+<p>Verificação:</p>
+<pre><code>systemctl --user is-enabled rclone-gdrive.service
+systemctl --user is-active rclone-gdrive.service
+mountpoint &quot;$HOME/GoogleDrive&quot;</code></pre>
+<p>Esperado: <code>enabled</code>, <code>active</code> e indicação de que a pasta é um mountpoint.</p>
+<p>Se o serviço estiver parado, sem outra montagem manual concorrente:</p>
+<pre><code>systemctl --user start rclone-gdrive.service</code></pre>
+<p>Não recrie o remote nem repita a instalação numa máquina já funcional.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="incidente"><h2>4. Incidente: invalid_grant e correção do diagnóstico</h2><p>Em 26/10 o serviço falhava com código 1 e reiniciava repetidamente. O log identificou:</p>
+<pre><code>couldn&#x27;t fetch token: invalid_grant: maybe token expired?</code></pre>
+<p>Isso demonstra falha na renovação da autorização, mas não identifica sozinho todos os possíveis motivos. Não era evidência de problema no FUSE ou de falta de arquivos na nuvem.</p>
+<p>O diagnóstico local mostrou acesso remoto funcional depois, serviço ativo e montagem funcionando. As últimas linhas de erro mostradas eram de um horário anterior: histórico de erro não equivale a falha atual.</p>
+<p>O script antigo procurava <code>client_id</code> e <code>client_secret</code> no arquivo inteiro. Isso não prova que pertencem especificamente à seção <code>[gdrive]</code>, nem valida as credenciais. O teste remoto posterior usando explicitamente o mesmo binário e arquivo de configuração ofereceu evidência mais forte.</p>
+<p>Depois, o usuário confirmou no Google Cloud que o aplicativo estava em <code>Testando</code>. A documentação do Google explica que autorizações nesse modo expiram após sete dias e que o refresh token também expira para esse tipo de acesso ao Drive.</p>
+<p>Conclusão: o modo de teste era uma causa concreta de expiração periódica, compatível com a recorrência. Não é possível provar retrospectivamente que causou cada falha anterior.</p>
+<p>Correções em relação às orientações antigas:<br>- Não presumir ausência de client ID próprio: o usuário informou que já existia.<br>- Não dizer que criar novas chaves resolve tudo.<br>- Não insistir em mudar o nome do app para liberar publicação.<br>- No Console observado, foi necessário completar página inicial, privacidade e domínio no Branding.<br>- Reconectar não é o procedimento para inserir novas credenciais; ele reautoriza o remote existente.<br>- Produção remove a expiração específica de teste, não garante autorização eterna.</p>
+<p>Base: documentação Google de público-alvo e histórico da manutenção.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="cloud"><h2>5. Google Cloud: projeto e credenciais existentes</h2><p>Projeto utilizado: <code>axial-studio-511113-v9</code>.<br>Aplicativo: <code>rclone gdrive Aurora Dan</code>.<br>Tipo de usuário: Externo.<br>Cliente OAuth: aplicativo para computador.<br>Estado final informado pelo usuário: Em produção.</p>
+<p>Branding:<br><a href="https://console.cloud.google.com/auth/branding?project=axial-studio-511113-v9">https://console.cloud.google.com/auth/branding?project=axial-studio-511113-v9</a></p>
+<p>Público-alvo:<br><a href="https://console.cloud.google.com/auth/audience?project=axial-studio-511113-v9">https://console.cloud.google.com/auth/audience?project=axial-studio-511113-v9</a></p>
+<p>Credenciais, conforme a interface: Google Auth Platform → Clientes.</p>
+<p>Não foi necessário criar outro projeto, outro client ID ou outra chave secreta nesta correção. O documento não reproduz valores de client ID, segredos, tokens ou códigos de autenticação.</p>
+<p>Para uma instalação nova, em outro contexto: ativar Google Drive API, configurar o consentimento e criar um cliente OAuth para computador conforme a documentação atual do rclone. Não reaplicar esses passos na instalação já pronta.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="pages"><h2>6. GitHub Pages: site informativo e privacidade</h2><p>Conta GitHub: <code>mdanieldantas</code>.<br>Repositório público criado: <code>rclone-aurora-info</code>.<br>Arquivos criados pelo usuário:<br>- <code>index.html</code>: apresentação e finalidade pessoal.<br>- <code>privacidade.html</code>: política de privacidade.</p>
+<p>Publicação configurada: Settings → Pages → Deploy from a branch → <code>main</code> → <code>/ (root)</code> → Save.</p>
+<p>Endereços usados:</p>
+<pre><code>https://mdanieldantas.github.io/rclone-aurora-info/
+https://mdanieldantas.github.io/rclone-aurora-info/privacidade.html</code></pre>
+<p>Editor no navegador:</p>
+<pre><code>https://github.dev/mdanieldantas/rclone-aurora-info</code></pre>
+<p>No repositório aberto no GitHub, a tecla <code>.</code> também abre o editor web.</p>
+<p>O usuário confirmou a publicação do site. O conteúdo remoto dessas páginas não pôde ser validado independentemente pela ferramenta de consulta durante a sessão.</p>
+<p>O site é informativo: não deve conter login próprio, tokens, arquivos pessoais ou cópia do <code>rclone.conf</code>. O repositório público não torna o Drive público.</p>
+<p>A página inicial e a política foram originalmente redigidas com o nome <code>rclone Aurora Dan</code>. Recomenda-se alinhar seus títulos ao nome final <code>rclone gdrive Aurora Dan</code>; essa atualização editorial não foi confirmada como realizada.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="branding"><h2>7. Branding: preenchimento que liberou a publicação</h2><p>Valores finais orientados e seguidos de confirmação de publicação:<br>- Nome: <code>rclone gdrive Aurora Dan</code>.<br>- E-mail de suporte: <code>contatomarcosdgomes@gmail.com</code>.<br>- Logotipo: vazio.<br>- Página inicial: <code><a href="https://mdanieldantas.github.io/rclone-aurora-info/">https://mdanieldantas.github.io/rclone-aurora-info/</a></code>.<br>- Política: <code><a href="https://mdanieldantas.github.io/rclone-aurora-info/privacidade.html">https://mdanieldantas.github.io/rclone-aurora-info/privacidade.html</a></code>.<br>- Termos de serviço: vazio; não foi criada página de termos.<br>- Domínio autorizado: <code>mdanieldantas.github.io</code>.<br>- Contato do desenvolvedor: <code>contatomarcosdgomes@gmail.com</code>.</p>
+<p>Erro observado: o domínio isolado foi colocado no campo de Termos de Serviço. O Console exigiu HTTP/HTTPS e informou domínio ausente.</p>
+<p>Correção aplicada:<br>1. Apagar o domínio do campo Termos de Serviço.<br>2. Clicar em Adicionar domínio, na seção Domínios autorizados.<br>3. Inserir somente <code>mdanieldantas.github.io</code>, sem protocolo e sem caminho.<br>4. Salvar.<br>5. Abrir Público-alvo, publicar e confirmar Em produção.</p>
+<p>A documentação atual do rclone recomenda preencher página inicial, política e domínio; cita GitHub Pages como opção. Não usar URLs inventadas ou sites de terceiros como se fossem próprios.</p>
+<p>Se uma instalação futura exigir propriedade de domínio ou verificação adicional, seguir a mensagem específica. O sucesso deste projeto não garante que a interface e as exigências serão idênticas para todos.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="publicacao"><h2>8. Produção, privacidade, custos e limites</h2><p>Publicação OAuth e compartilhamento de arquivos são coisas diferentes. Em produção, um app Externo pode ser autorizado por outras contas para os dados delas; isso não concede a essas contas acesso ao Drive de Marcos.</p>
+<p>Verificação formal do aplicativo é outra etapa, diferente do status de publicação. Produção não significa automaticamente verificado. Avisos ou exigências do Google devem ser avaliados conforme escopos e público do app.</p>
+<p>O banner de teste do Cloud com créditos não precisava ser ativado para esta mudança. Não houve relato de contratação ou cadastro de cartão para resolver o problema.</p>
+<p>Este guia não promete API ilimitada e gratuita para sempre. Consulte limites, condições e eventual faturamento do projeto diretamente no Google antes de contratar serviços ou aumentar muito o uso. O armazenamento contratado no Google Drive é separado do status OAuth.</p>
+<p>No modo de teste, a regra de sete dias aplica-se ao acesso ao Drive descrito aqui. Em produção essa regra específica deixa de ser a limitação, mas revogação, políticas de conta e outros problemas ainda podem exigir reautenticação.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="reconnect"><h2>9. Renovação da autorização: sequência validada</h2><p>Procedimento realizado em 27/10 após publicar o app. Não repetir agora sem necessidade.</p>
+<p>Antes: fechar documentos na montagem, encerrar cópias e aguardar uploads. A desmontagem não é garantia de conclusão de envios.</p>
+<p>Parar:</p>
+<pre><code>systemctl --user stop rclone-gdrive.service</code></pre>
+<p>Reautorizar usando o mesmo executável e configuração do serviço:</p>
+<pre><code>/usr/bin/rclone --config=&quot;$HOME/.config/rclone/rclone.conf&quot; config reconnect gdrive:</code></pre>
+<p>Respostas confirmadas:</p>
+<pre><code>Token already configured - replace it?                 y
+Use web browser to automatically authenticate ...?    y
+Configure this as a Shared Drive (Team Drive)?         n</code></pre>
+<p>No navegador, selecionar a própria conta e conferir a identidade do aplicativo antes de autorizar. O log registrou <code>Got code</code>.</p>
+<p>Shared Drive é unidade de organização; não é sinônimo de pastas comuns compartilhadas com o usuário.</p>
+<p>O callback local <code><a href="http://127.0.0.1:53682/">http://127.0.0.1:53682/</a></code> é temporário. Não abrir porta no roteador nem publicar esse endpoint. Não reproduzir URLs com estado OAuth ou códigos em documentação pública.</p>
+<p>Testar:</p>
+<pre><code>/usr/bin/rclone --config=&quot;$HOME/.config/rclone/rclone.conf&quot; lsf gdrive: --max-depth 1</code></pre>
+<p>A listagem funcionou. Nomes privados não são reproduzidos neste guia.</p>
+<p>Somente após sucesso:</p>
+<pre><code>systemctl --user reset-failed rclone-gdrive.service
+systemctl --user start rclone-gdrive.service
+systemctl --user is-active rclone-gdrive.service
+mountpoint &quot;$HOME/GoogleDrive&quot;</code></pre>
+<p>A saída final foi <code>active</code> e <code>/var/home/dan/GoogleDrive is a mountpoint</code>.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="reconstrucao"><h2>10. Reconstrução em outra instalação: verificar antes</h2><p>Esta seção é referência, não tarefa pendente para a máquina atual.</p>
+<p>Primeiro verificar:</p>
+<pre><code>command -v rclone
+/usr/bin/rclone version
+command -v fusermount3
+/usr/bin/rclone config file</code></pre>
+<p>Se caminhos não existirem, adaptar ao sistema real antes de usar a unidade abaixo. Não instalar uma segunda cópia apenas por hábito. No histórico, Homebrew instalou rclone, mas o serviço continuou usando o binário do host.</p>
+<p>Para um remote novo, executar <code>/usr/bin/rclone config</code> apenas se esse binário existir. Selecionar:<br>- Novo remote: <code>gdrive</code>.<br>- Storage: <code>drive</code>, não Google Cloud Storage; números da lista variam.<br>- Client ID e secret próprios.<br>- Escopo: <code>drive</code> para acesso completo pretendido; <code>drive.readonly</code> se o objetivo for apenas leitura.<br>- Conta de serviço: vazia neste cenário de login pessoal.<br>- Autenticação pelo navegador: sim, se houver navegador local.<br>- Shared Drive: não para este cenário.<br>- Confirmar o remote e sair.</p>
+<p>Antes de automatizar, confirmar a listagem usando explicitamente o arquivo que será usado pela unidade.</p>
+<p>Criar diretórios apenas se necessário:</p>
+<pre><code>mkdir -p &quot;$HOME/GoogleDrive&quot; &quot;$HOME/.config/systemd/user&quot;
+mkdir -p &quot;$HOME/.cache/rclone&quot; &quot;$HOME/.local/state/rclone&quot;</code></pre>
+<p>O ponto de montagem deve existir e estar vazio antes do primeiro mount. Se já for mountpoint, não iniciar uma segunda montagem. Se houver arquivos locais, não usar <code>--allow-non-empty</code> para ocultar o problema.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="systemd"><h2>11. Unidade systemd preservada do guia validado</h2><p>Arquivo: <code>~/.config/systemd/user/rclone-gdrive.service</code>.<br>Conteúdo preservado do guia anterior; não houve edição integral nem nova comparação do arquivo durante esta manutenção. O ExecStart mostrado no status é compatível com os parâmetros abaixo.</p>
+<p>Não sobrescrever a unidade funcional por rotina. Para reconstrução, criar o arquivo com editor e revisar antes de ativar.</p>
+<pre><code>[Unit]
+Description=Mount Google Drive with rclone
+Documentation=https://rclone.org/commands/rclone_mount/
+After=graphical-session-pre.target
+Wants=graphical-session-pre.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount gdrive: %h/GoogleDrive \
+  --config=%h/.config/rclone/rclone.conf \
+  --cache-dir=%h/.cache/rclone \
+  --vfs-cache-mode=full \
+  --vfs-cache-max-size=10G \
+  --vfs-cache-max-age=24h \
+  --dir-cache-time=1000h \
+  --poll-interval=15s \
+  --log-file=%h/.local/state/rclone/gdrive.log \
+  --log-level=INFO
+ExecStop=/usr/bin/fusermount3 -uz %h/GoogleDrive
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target</code></pre>
+<p>Depois de criar ou editar deliberadamente a unidade:</p>
+<pre><code>systemctl --user daemon-reload</code></pre>
+<p>Somente se não houver mount manual concorrente e o remote já tiver passado no teste:</p>
+<pre><code>systemctl --user enable --now rclone-gdrive.service
+systemctl --user status rclone-gdrive.service --no-pager</code></pre>
+<p>Se estiver migrando de mount manual, encerrar cópias e aguardar uploads antes de desmontá-lo com <code>fusermount3 -u &quot;$HOME/GoogleDrive&quot;</code>. Confirmar a desmontagem antes de iniciar o serviço.</p>
+<p>Não usar <code>--daemon</code> dentro desta unidade. O processo fica sob supervisão do systemd. Não usar <code>sudo</code> para esses comandos de serviço do usuário.</p>
+<p>Limites preservados:<br>- <code>%h</code> representa a home na unidade, não a sintaxe <code>~</code> do shell.<br>- <code>Type=notify</code> aguarda notificação de montagem pronta.<br>- A ordem gráfica não garante internet disponível.<br>- <code>Restart=on-failure</code> não resolve credenciais inválidas e pode gerar milhares de tentativas.<br>- <code>ExecStop</code> usa desmontagem lazy (<code>-z</code>); não garante conclusão de uploads.<br>- Não foi configurado linger nem acesso antes do login.<br>- Rotação automática do log não foi configurada.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="cache"><h2>12. Cache, uploads e cuidados com dados</h2><p>O mount é um acesso virtual à nuvem, não um espelho offline completo nem backup independente.</p>
+<p>Configuração preservada:<br>- <code>full</code>: cache de leituras e escritas.<br>- <code>10G</code>: meta de tamanho, não teto rígido; arquivos abertos e limpeza periódica podem permitir excedentes.<br>- <code>24h</code>: prazo desde o último acesso para expiração dos itens elegíveis.<br>- <code>1000h</code>: cache de metadados de diretórios, não garantia de retenção offline.<br>- <code>15s</code>: intervalo de consulta de mudanças suportada pelo backend.</p>
+<p>Arquivos salvos podem estar aguardando upload. O envio depende do fechamento e do intervalo de write-back. Antes de suspender, desligar, parar ou reiniciar o serviço, aguarde os envios e confira dados importantes no site do Drive.</p>
+<p>Monitorar:</p>
+<pre><code>tail -f &quot;$HOME/.local/state/rclone/gdrive.log&quot;
+du -sh &quot;$HOME/.cache/rclone&quot;
+df -h &quot;$HOME&quot;</code></pre>
+<p>Ctrl+C encerra o acompanhamento do log, não o serviço.</p>
+<p>Não apagar cache para corrigir OAuth. Pode haver dados ainda não enviados. Não iniciar duas instâncias com o mesmo cache e remotes sobrepostos: a documentação alerta para possível corrupção.</p>
+<p>Excluir arquivos em <code>~/GoogleDrive</code> afeta a nuvem. Não executar remoção recursiva nessa pasta. O uso padrão da lixeira no backend não substitui backup.</p>
+<p>Atalhos de pastas exigem cuidado: excluir conteúdo acessado por um atalho na montagem pode atingir a pasta de destino.</p>
+<p>Documentos Google podem aparecer como exportações DOCX/XLSX/PPTX. Não presumir edição bidirecional do documento nativo; para colaboração, preferir navegador.</p>
+<p>Áudio, VMs e bancos de dados: trabalhar localmente e transferir arquivos fechados é uma abordagem mais segura que tratá-los como disco local na nuvem.</p>
+<p>Não há sync, bisync ou backup agendado configurado neste projeto. Não adicionar <code>rclone sync</code> como se fosse parte necessária do mount: esse comando pode excluir conteúdo no destino.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="diagnostico"><h2>13. Diagnóstico seguro sem reinstalar</h2><p>Começar com observação, não alterações:</p>
+<pre><code>/usr/bin/rclone version
+/usr/bin/rclone config file
+systemctl --user status rclone-gdrive.service --no-pager
+systemctl --user show rclone-gdrive.service -p ActiveState -p SubState -p Result -p NRestarts
+mountpoint &quot;$HOME/GoogleDrive&quot;
+stat -c &#x27;%a %U %n&#x27; &quot;$HOME/.config/rclone/rclone.conf&quot;</code></pre>
+<p>Permissões observadas em 26/10: <code>600</code>. A presença do arquivo ou de um token não prova que a autenticação funciona.</p>
+<p>Consultar erros recentes, sempre comparando horários:</p>
+<pre><code>journalctl --user -u rclone-gdrive.service --since &#x27;15 minutes ago&#x27; -n 60 --no-pager
+tail -n 30 &quot;$HOME/.local/state/rclone/gdrive.log&quot;</code></pre>
+<p>O arquivo de log pode mostrar erros antigos mesmo após a recuperação. O journal tem o ciclo do serviço; detalhes do rclone vão principalmente ao arquivo configurado.</p>
+<p>Teste real opcional de acesso:</p>
+<pre><code>/usr/bin/rclone --config=&quot;$HOME/.config/rclone/rclone.conf&quot; lsf gdrive: --max-depth 1</code></pre>
+<p>Esse teste não altera os arquivos remotos, mas realiza chamadas à API e pode renovar automaticamente o token salvo. Portanto não deve ser descrito como auditoria estritamente sem gravações locais.</p>
+<p>Interpretação:<br>- <code>invalid_grant</code> novo: investigar autorização, status do app e revogações; não trocar chaves automaticamente.<br>- Listagem funciona, mas mount falha: examinar FUSE, diretório e parâmetros do serviço.<br>- Pasta vazia sem mount: pode ser apenas o diretório local; não comprova perda remota.<br>- Serviço reiniciando sem parar: parar a unidade durante investigação, após cuidados com envios, e corrigir a causa antes de retomar.<br>- Erro de rede/DNS: corrigir conectividade, sem reautorizar por tentativa.<br>- Erro de client: conferir correspondência projeto/cliente/configuração, sem publicar segredos.</p>
+<p>Não executar <code>cat rclone.conf</code>, <code>config show</code> ou dumps de ambiente para compartilhar diagnóstico. Não é necessário expor credenciais.</p>
+<p>O script antigo <code>verificar-gdrive.sh</code> não é a fonte definitiva: buscava campos em todas as seções, imprimia escapes de cor literalmente, podia mostrar nomes ou erros sem sanitização e chamava de somente leitura um teste que pode renovar token. Este guia substitui seu uso como recomendação principal pelos comandos dirigidos acima.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="operacao"><h2>14. Comandos de manutenção e reversão</h2><p>Estado:</p>
+<pre><code>systemctl --user status rclone-gdrive.service --no-pager</code></pre>
+<p>Iniciar:</p>
+<pre><code>systemctl --user start rclone-gdrive.service</code></pre>
+<p>Parar temporariamente, depois de aguardar uploads:</p>
+<pre><code>systemctl --user stop rclone-gdrive.service</code></pre>
+<p>Reiniciar, apenas em manutenção planejada:</p>
+<pre><code>systemctl --user restart rclone-gdrive.service</code></pre>
+<p>Desativar início automático e parar:</p>
+<pre><code>systemctl --user disable --now rclone-gdrive.service</code></pre>
+<p>Reativar:</p>
+<pre><code>systemctl --user enable --now rclone-gdrive.service</code></pre>
+<p>Esses controles não exigem apagar cache, configuração ou arquivos da nuvem. Não interromper tarefas de escrita sem planejar.</p>
+<p>Depois de reiniciar o computador, entrar na sessão e validar:</p>
+<pre><code>systemctl --user is-enabled rclone-gdrive.service
+systemctl --user is-active rclone-gdrive.service
+mountpoint &quot;$HOME/GoogleDrive&quot;</code></pre>
+<p>Confirmar também a abertura da pasta no Dolphin. Esse novo teste pós-reboot ainda não foi confirmado após a publicação OAuth.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="seguranca"><h2>15. Segurança, backup de configuração e GUI</h2><p>Nunca publicar tokens, client secret, códigos de autenticação ou <code>rclone.conf</code>, inclusive no repositório de informações.</p>
+<p>Permissões <code>600</code> foram confirmadas. Se necessário em outra instalação:</p>
+<pre><code>chmod 600 &quot;$HOME/.config/rclone/rclone.conf&quot;</code></pre>
+<p>Isso não criptografa o arquivo nem protege contra acesso pela própria sessão do usuário.</p>
+<p>Antes de manutenção de credenciais, fazer uma cópia protegida, apenas em local privado e fora da montagem:</p>
+<pre><code>(umask 077; cp &quot;$HOME/.config/rclone/rclone.conf&quot; &quot;$HOME/.config/rclone/rclone.conf.backup-$(date +%Y%m%d-%H%M%S)&quot;)</code></pre>
+<p>Esse comando cria um arquivo local contendo segredos. É uma recomendação opcional, não uma ação confirmada como executada. Não colocar o backup no GitHub; proteger e eliminar cópias antigas conforme planejamento.</p>
+<p>O guia anterior registrava possível exposição de access token em uma sessão antiga. Não há confirmação suficiente para declarar exposição de refresh token nem encerramento de toda a avaliação de risco. Se houver suspeita de acesso por terceiros, revisar autorizações em manutenção planejada.</p>
+<p>RClone Manager:<br>- Foi instalado como Flatpak pelo Bazaar no histórico.<br>- ID: <code>io.github.zarestia_dev.rclone-manager</code>.<br>- Integração com a mesma configuração/montagem não foi plenamente validada.<br>- Não é necessário para o serviço atual.<br>- Não configurar montagem concorrente em <code>~/GoogleDrive</code> nem liberar permissões amplas sem diagnóstico.<br>- A seleção de <code>rclone.conf</code> não equivale a importar backup <code>.rcman</code>.</p>
+<p>Não há registro de instalação/teste do Rclone UI neste projeto.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="checklist"><h2>16. Checklist final e pendências reais</h2><p>Confirmado:<br>- [x] rclone do host identificado, versão observada 1.75.2.<br>- [x] Remote <code>gdrive:</code> preservado.<br>- [x] Credenciais próprias já existentes, sem troca nesta manutenção.<br>- [x] Site GitHub Pages criado e publicação informada pelo usuário.<br>- [x] Branding preenchido; domínio adicionado no campo correto.<br>- [x] Nome final: <code>rclone gdrive Aurora Dan</code>.<br>- [x] App em produção confirmado pelo usuário.<br>- [x] Reconexão pelo navegador concluída.<br>- [x] Shared Drive respondido com <code>n</code>.<br>- [x] Teste remoto com configuração explícita funcionou.<br>- [x] Serviço reiniciado, estado <code>active</code> confirmado.<br>- [x] Montagem confirmada em <code>/var/home/dan/GoogleDrive</code>.</p>
+<p>Não marcar como realizado sem novo teste:<br>- [ ] Reboot e validação após a mudança OAuth.<br>- [ ] Alinhamento editorial do nome nas páginas públicas.<br>- [ ] Rotação de logs.<br>- [ ] Auditoria independente do conteúdo remoto das páginas.<br>- [ ] Integração da GUI com o mesmo remote.</p>
+<p>Não há pendência de instalar rclone, recriar o cliente ou migrar do cliente compartilhado nesta manutenção. A documentação anterior nesse ponto foi superada pelos fatos fornecidos pelo usuário.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section><section id="fontes"><h2>17. Base documental e histórico desta edição</h2><p>Base interna: <code>Guia_Google_Drive_Aurora_rclone.md</code>, edição de 08/10/2026, e saídas/confirmacões fornecidas pelo usuário em 26–27/10/2026. Os resultados locais não foram obtidos por acesso remoto do assistente à máquina.</p>
+<p>Documentação pública consultada:<br>- Google Drive no rclone: <a href="https://rclone.org/drive/">https://rclone.org/drive/</a><br>- Mount, systemd e cache VFS: <a href="https://rclone.org/commands/rclone_mount/">https://rclone.org/commands/rclone_mount/</a><br>- Público-alvo OAuth e expiração em modo Testing: <a href="https://support.google.com/cloud/answer/15549945?hl=en">https://support.google.com/cloud/answer/15549945?hl=en</a><br>- Reautenticação: <a href="https://rclone.org/commands/rclone_config_reconnect/">https://rclone.org/commands/rclone_config_reconnect/</a><br>- GitHub Pages: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site</a></p>
+<p>Interfaces e políticas podem mudar. Os comandos de manutenção refletem o serviço e os caminhos deste computador. A edição não promete ausência permanente de revogações nem cria serviços externos automaticamente.</p><p><a href="#mini-sumario">↑ Voltar ao mini-sumário</a></p></section></main></body></html>
